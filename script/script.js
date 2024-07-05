@@ -1,15 +1,33 @@
-function preload(){
-    /* put stuff that need to be loaded before the canvas gets rendered here */
-}
+let canvasWidth = 400;
+let canvasHeight = 400;
+let points = [];
+let yPos = 0;
+let xPos = 0;
+let numDrops = 100;
 
 function setup(){
-    /* put stuff that need to be setup before the draw loop here */
-    createCanvas(400, 400);
+    createCanvas(canvasWidth, canvasHeight);
+    for(let i = 0; i < numDrops; i++){
+        xPos = random(0, canvasWidth);
+        yPos = random(0, -1 * canvasHeight);
+        points.push({yPos: yPos, xPos: xPos});
+    }
 }
 
 function draw(){
-    /* put stuff that need to be drawn here animaton happens here */
     background(0);
     fill(255);
-    ellipse(mouseX, mouseY, 50, 50);
+    raindrops();
+    console.log(points.length);
+}
+
+function raindrops(){
+    for (let p in points){
+        ellipse(points[p].xPos, points[p].yPos, 10, 14);
+        points[p].yPos += 5;
+        if(points[p].yPos > canvasHeight){
+            points[p].yPos = 0;
+            points[p].xPos = random(0, canvasWidth);
+        }
+    }
 }
